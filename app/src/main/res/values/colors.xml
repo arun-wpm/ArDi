@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="morning_blue">#FF89B0AE</color>
+    <color name="powder_blue">#FFBEE3DB</color>
+    <color name="cultured">#FFFAF9F9</color>
+    <color name="apricot">#FFFFD6BA</color>
+    <color name="cedar_chest">#FFCD533B</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
