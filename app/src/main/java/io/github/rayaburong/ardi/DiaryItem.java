@@ -10,10 +10,10 @@ import java.util.Objects;
 class DiaryItem implements ArdiItem {
     Date date;
     Mood mood;
-    ArrayList<Location> locations;
+    List<Location> locations;
     String body;
 
-    private DiaryItem(Date date, Mood mood, ArrayList<Location> locations, String body) {
+    private DiaryItem(Date date, Mood mood, List<Location> locations, String body) {
         this.date = date;
         this.mood = mood;
         this.locations = locations;
@@ -21,7 +21,8 @@ class DiaryItem implements ArdiItem {
     }
 
     public static DiaryItem parseFromString(String string) {
-
+        // TODO: change later
+        return new DiaryItem(new Date(), Mood.NEUTRAL, new ArrayList<>(), "");
     }
 
     @Override

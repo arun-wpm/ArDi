@@ -2,4 +2,9 @@
     <string name="app_name">ArDi</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+    <string name="mongoDBUsername">arunwpm</string>
+    <string name="mongoDBPassword">27grnjv,v\'Fdfu[u!!</string>
+    <string name="mongoDBClusterAddress">cluster0.adobn.mongodb.net</string>
+    <string name="mongoDBDatabaseName">ArDiLogs</string>
 </resources>

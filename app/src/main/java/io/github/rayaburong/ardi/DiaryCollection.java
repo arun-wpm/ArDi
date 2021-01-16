@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class DiaryCollection implements ArdiCollection {
-    final ArrayList<DiaryItem> diaryItems;
+    final List<DiaryItem> diaryItems;
 
-    private DiaryCollection(ArrayList<DiaryItem> diaryItems) {
+    private DiaryCollection(List<DiaryItem> diaryItems) {
         this.diaryItems = diaryItems;
     }
 
-    public static DiaryCollection parseFromFile(String filename) {
-
+    public static DiaryCollection parseFromDB(String filename) {
+        // TODO: change later
+        return new DiaryCollection(new ArrayList<>());
     }
 
     @Override
