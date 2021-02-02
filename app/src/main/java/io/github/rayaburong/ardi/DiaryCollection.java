@@ -1,5 +1,13 @@
 package io.github.rayaburong.ardi;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,9 +20,16 @@ class DiaryCollection implements ArdiCollection {
         this.diaryItems = diaryItems;
     }
 
-    public static DiaryCollection parseFromDB(String filename) {
-        // TODO: change later
-        return new DiaryCollection(new ArrayList<>());
+    public static DiaryCollection parseString(String jsonString) throws JSONException, ParseException {
+        Log.d("DiaryCollection", "parseString: " + jsonString);
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray resultArray = jsonObject.getJSONArray("result");
+        List<DiaryItem> diaryItems = new ArrayList<>();
+        for (int i = 0; i < resultArray.length(); i++) {
+            diaryItems.add(DiaryItem.parseJSON(resultArray.getJSONObject(i)));
+        }
+        DiaryCollection diaryCollection = new DiaryCollection(diaryItems);
+        return diaryCollection;
     }
 
     @Override
@@ -23,7 +38,7 @@ class DiaryCollection implements ArdiCollection {
     }
 
     @Override
-    public ArdiItem getItem(int index) {
+    public DiaryItem getItem(int index) {
         return diaryItems.get(index);
     }
 

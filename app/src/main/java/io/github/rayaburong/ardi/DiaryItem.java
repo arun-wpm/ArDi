@@ -2,10 +2,18 @@ package io.github.rayaburong.ardi;
 
 import android.location.Location;
 
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 class DiaryItem implements ArdiItem {
     Date date;
@@ -20,9 +28,14 @@ class DiaryItem implements ArdiItem {
         this.body = body;
     }
 
-    public static DiaryItem parseFromString(String string) {
-        // TODO: change later
-        return new DiaryItem(new Date(), Mood.NEUTRAL, new ArrayList<>(), "");
+    public static DiaryItem parseJSON(JSONObject jsonObject) throws ParseException {
+        DateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
+        Date date = format.parse(jsonObject.optString("ymd", ""));
+        return new DiaryItem(
+                date,
+                Mood.values()[Integer.parseInt(jsonObject.optString("mood", ""))],
+                Arrays.stream(jsonObject.optString("locations", "").split("!")).map(Location::new).collect(Collectors.toList()),
+                jsonObject.optString("body", ""));
     }
 
     @Override
