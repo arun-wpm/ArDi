@@ -2,19 +2,25 @@ package io.github.rayaburong.ardi;
 
 import android.graphics.Color;
 import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
+public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
     private static final Map<Mood, Integer> MOOD_TO_COLOR = new HashMap<Mood, Integer>() {
         {
             put(Mood.EXTREMELY_BAD, R.color.cedar_chest); // TODO: change
@@ -26,7 +32,8 @@ class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
             put(Mood.EXTREMELY_GOOD, R.color.morning_blue); // TODO: change
         }
     };
-    private final DiaryCollection diaryCollection;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
+    private DiaryCollection diaryCollection;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView diaryDate;
@@ -73,8 +80,8 @@ class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getDiaryDate().setText(diaryCollection.getItem(position).getDate().toString());
-        holder.getDiaryLocations().setText(diaryCollection.getItem(position).getLocations().stream().map(Location::toString).reduce("", String::concat));
+        holder.getDiaryDate().setText(DATE_FORMAT.format(diaryCollection.getItem(position).getDate()));
+        holder.getDiaryLocations().setText(diaryCollection.getItem(position).getLocations().stream().map(Location::getProvider).reduce("", String::concat));
         holder.getDiaryMood().setBackgroundColor(holder.getDiaryMood().getContext().getColor(MOOD_TO_COLOR.get(diaryCollection.getItem(position).getMood())));
         holder.getDiaryBody().setText(diaryCollection.getItem(position).getBody());
     }
@@ -82,5 +89,10 @@ class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return diaryCollection.getLength();
+    }
+
+    public void updateCollection(String responseString) throws JSONException, ParseException {
+        // TODO: make this better
+        diaryCollection = DiaryCollection.parseString(responseString);
     }
 }

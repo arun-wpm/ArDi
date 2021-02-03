@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class DiaryCollection implements ArdiCollection {
+public class DiaryCollection implements ArdiCollection {
     final List<DiaryItem> diaryItems;
 
     private DiaryCollection(List<DiaryItem> diaryItems) {
